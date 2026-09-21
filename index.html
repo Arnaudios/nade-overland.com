@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Nade</title>
+  <meta name="description" content="Camping spots mapped by people on the road.">
+  <!-- Supabase appends login tokens to the URL after an email link is
+       clicked. Never leak them to another site through the Referer header. -->
+  <meta name="referrer" content="no-referrer">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <style>
+    /* Self-hosted Geist, same files as the app: no request to Google, so a
+       visitor's IP address doesn't leave for a third party. */
+    @font-face {
+      font-family: 'Geist';
+      font-weight: 100 900;
+      font-display: swap;
+      src: url('/fonts/geist-latin-ext.woff2') format('woff2');
+      unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+    @font-face {
+      font-family: 'Geist';
+      font-weight: 100 900;
+      font-display: swap;
+      src: url('/fonts/geist-latin.woff2') format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+
+    /* The Nade brand palette: five colours, nothing else. */
+    :root {
+      --beige: #f2ece0;
+      --ochre: #d2543f;
+      --stone: #6e685c;
+      --ink: #201e19;
+      color-scheme: light;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { margin: 0; height: 100%; }
+
+    body {
+      background: var(--beige);
+      color: var(--ink);
+      font: 400 16px/24px 'Geist', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: calc(env(safe-area-inset-top) + 32px) 24px calc(env(safe-area-inset-bottom) + 32px);
+    }
+
+    main { width: 100%; max-width: 420px; }
+
+    .mark { display: block; color: var(--ochre); margin-bottom: 20px; }
+
+    h1 { margin: 0 0 8px; font: 600 34px/38px 'Geist', system-ui, sans-serif; }
+
+    p { margin: 0; }
+    .lead { color: var(--stone); }
+    .note { margin-top: 24px; color: var(--stone); font-size: 14px; line-height: 20px; }
+
+    /* Only the state that matches the URL is shown. */
+    [data-state] { display: none; }
+    body[data-show='home'] [data-state='home'],
+    body[data-show='signup'] [data-state='signup'],
+    body[data-show='email_change'] [data-state='email_change'],
+    body[data-show='done'] [data-state='done'],
+    body[data-show='error'] [data-state='error'] { display: block; }
+  </style>
+</head>
+<body data-show="home">
+  <main>
+    <svg class="mark" width="48" height="48" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <g stroke="currentColor" stroke-width="2.6" stroke-linecap="butt" stroke-dasharray="5.4 1.5">
+        <path d="M0.5 15.5C4 11 7 9.6 11 10.4C15 11.2 19 10.4 23.5 6.5"/>
+        <path d="M0.5 21C4 16.5 7 15.1 11 15.9C15 16.7 19 15.9 23.5 12"/>
+      </g>
+    </svg>
+
+    <section data-state="home">
+      <h1>Nade</h1>
+      <p class="lead">Camping spots mapped by people on the road.</p>
+      <p class="note">Coming soon to the App Store.</p>
+    </section>
+
+    <section data-state="signup">
+      <h1>Email confirmed</h1>
+      <p class="lead">Your account is ready. Go back to the Nade app to keep mapping.</p>
+    </section>
+
+    <section data-state="email_change">
+      <h1>Email confirmed</h1>
+      <p class="lead">Your points and places are now tied to this address. Go back to the Nade app.</p>
+    </section>
+
+    <section data-state="done">
+      <h1>You're all set</h1>
+      <p class="lead">Go back to the Nade app.</p>
+    </section>
+
+    <section data-state="error">
+      <h1>This link has expired</h1>
+      <p class="lead">Links in our emails work once, and only for a while.</p>
+      <p class="note">If you already confirmed your email, you're all set. Go back to the Nade app.</p>
+    </section>
+  </main>
+
+  <script>
+    // Supabase sends people here after they click a link in one of its
+    // emails. The confirmation itself has already happened on Supabase's side
+    // by then; this page only tells them so.
+    //
+    // Success arrives as  #access_token=…&refresh_token=…&type=signup
+    // Failure arrives as  #error=…&error_code=otp_expired&…  (sometimes as ?error=…)
+    //
+    // The tokens are a live login session. They are never read, stored or
+    // sent anywhere, and are wiped from the address bar straight away so they
+    // don't linger in the browser history or get copied along with the URL.
+    function show() {
+      var hash = new URLSearchParams(location.hash.slice(1));
+      var query = new URLSearchParams(location.search);
+      var state = 'home';
+
+      if (hash.has('error') || hash.has('error_code') || query.has('error') || query.has('error_code')) {
+        state = 'error';
+      } else if (hash.has('access_token') || hash.has('type')) {
+        var type = hash.get('type');
+        state = type === 'signup' || type === 'email_change' ? type : 'done';
+      }
+
+      if (location.hash || location.search) {
+        history.replaceState(null, '', location.pathname);
+      }
+      document.body.setAttribute('data-show', state);
+    }
+
+    show();
+    // A link opened while this page is already on screen only changes the
+    // part after "#", which doesn't reload the page — handle that too, so
+    // tokens can't sit in the address bar.
+    window.addEventListener('hashchange', show);
+  </script>
+</body>
+</html>
