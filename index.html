@@ -61,6 +61,8 @@
     .lead { color: var(--stone); }
     .note { margin-top: 24px; color: var(--stone); font-size: 14px; line-height: 20px; }
 
+    a { color: var(--ochre); }
+
     /* Only the state that matches the URL is shown. */
     [data-state] { display: none; }
     body[data-show='home'] [data-state='home'],
@@ -105,6 +107,10 @@
       <p class="lead">Links in our emails work once, and only for a while.</p>
       <p class="note">If you already confirmed your email, you're all set. Go back to the Nade app.</p>
     </section>
+
+    <!-- Outside the state sections, so it is reachable whichever message is
+         showing. App Store Connect requires a public URL for this page. -->
+    <p class="note"><a href="/privacy.html">Privacy policy</a></p>
   </main>
 
   <script>
