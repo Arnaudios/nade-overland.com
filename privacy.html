@@ -29,7 +29,10 @@
 
     /* The Nade brand palette: five colours, nothing else. */
     :root {
-      --beige: #f2ece0;
+      /* The website stands on Shell, not Beige (user, 2026-09-27): a page
+         of text is not the ground under a map. */
+      --shell: #fbf8f1;
+      --beige: #ece3d2;
       --ochre: #d2543f;
       --stone: #6e685c;
       --ink: #201e19;
@@ -41,7 +44,7 @@
     html, body { margin: 0; }
 
     body {
-      background: var(--beige);
+      background: var(--shell);
       color: var(--ink);
       font: 400 16px/26px 'Geist', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
       -webkit-font-smoothing: antialiased;
