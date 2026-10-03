@@ -39,5 +39,6 @@ self-hosted, so the page makes no third-party requests at all.
 
 ## Brand
 
-Beige `#f2ece0`, Ochre `#d2543f`, Stone `#6e685c`, Ink `#201e19`; Geist.
-Same rules as the app: no white, no all-caps, English only.
+Shell `#fbf8f1` (the page), Beige `#ece3d2`, Ochre `#c87f4c` (a copper since
+2026-10-03), Stone `#6e685c`, Ink `#201e19`; Manrope. Same rules as the app:
+no all-caps, English only.
