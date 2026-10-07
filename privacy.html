@@ -143,7 +143,7 @@
         <li>Your Instagram username and YouTube channel, if you add them. They are public: buttons on your Nade profile open them. We do not connect to either account or read anything from it.</li>
         <li>Feedback you send from the menu, with the app version. It reaches us by email, and we answer at your sign-in address.</li>
         <li>What you contribute: spots, reviews, star ratings, photos, visits, amenity answers, vehicle access answers, and reports. All public, except reports, which only we see.</li>
-        <li>Your favourites, which only you can see.</li>
+        <li>Your favorites, which only you can see.</li>
         <li>Who you follow and who follows you, which only you can see. Everyone can see how many follow you.</li>
         <li>Your position, while the app is open, to show the map around you and to place a new spot. It is not recorded and not sent anywhere.</li>
       </ul>
@@ -155,7 +155,7 @@
         <li>Supabase hosts the database, the files and the sign-in.</li>
         <li>Resend sends the emails with your sign-in codes.</li>
         <li>Esri serves the satellite imagery, so it sees which part of the map you look at.</li>
-        <li>Place search sends what you type to Photon, run by komoot in Germany, with your position rounded to about a kilometre when it is known. No account, no email.</li>
+        <li>Place search sends what you type to Photon, run by komoot in Germany, with your position rounded to about a kilometer when it is known. No account, no email.</li>
       </ul>
     </section>
 
@@ -170,15 +170,16 @@
       <ul>
         <li>Your signed-in session, so you do not have to sign in every time.</li>
         <li>A spot you added with no signal, with its photos, until it goes up. It is sent the next time you have a connection, and deleted from the phone once it has.</li>
-        <li>A note that you have seen the welcome screen.</li>
+        <li>Your settings: language, distance units and map view.</li>
+        <li>A note that you have seen the welcome screen. It is also kept on your account, so it does not come back on a new phone.</li>
       </ul>
       <p>Deleting the app removes all of it, including any spot that never got sent.</p>
     </section>
 
     <section>
       <h2>Deleting your account</h2>
-      <p>Settings → Delete my account. Your login goes: email, sessions, and your favourites, your follows, Instagram username and YouTube channel with them.</p>
-      <p>What was public stays on the map — spots, reviews, photos, visits, points and badge — shown as &quot;Former traveler&quot;. A map that erased itself every time somebody left would not be much of a map.</p>
+      <p>Settings → Delete my account. Your login goes: email, sessions, and your favorites, your follows, Instagram username and YouTube channel with them.</p>
+      <p>What was public stays on the map — spots, reviews, photos, visits, points and badge — shown as &quot;Former Nader&quot;. A map that erased itself every time somebody left would not be much of a map.</p>
       <p>You choose between two options, neither pre-ticked. &quot;Delete, definitely&quot; keeps nothing that links back to you. &quot;Delete, but remember me&quot; keeps two things so your contributions can come back if you sign up again with the same address: a keyed fingerprint of your email (an HMAC-SHA256 — never the address itself, and it cannot be turned back into one) and your old display name. They are used only when someone confirms that same address on a new account.</p>
     </section>
 
